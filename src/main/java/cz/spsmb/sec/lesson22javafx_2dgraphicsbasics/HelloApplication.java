@@ -13,6 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class HelloApplication extends Application {
@@ -22,6 +24,7 @@ public class HelloApplication extends Application {
     public int speed = 10;
 
     Player player;
+    List<Enemy> enemies;
 
 
     Random random = new Random();
@@ -74,6 +77,11 @@ public class HelloApplication extends Application {
         stage.show();
 
         player = new Player(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT));
+        enemies = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            Enemy enemy = new Enemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT));
+            enemies.add(enemy);
+        }
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastTick = 0;
@@ -118,10 +126,24 @@ public class HelloApplication extends Application {
                 currentPlayerTexture = player.getImages()[1];
                 break;
         }
+
+        detectCollisions(player, enemies);
         graphicsContext.setFill(Color.GREENYELLOW);
         graphicsContext.drawImage(currentPlayerTexture, player.x, player.y, player.height, player.height);
 
+        for (Enemy enemy: enemies) {
+            graphicsContext.drawImage(enemy.getImage(), enemy.x, enemy.y, enemy.height, enemy.height);
+        }
+    }
 
+    private void detectCollisions(Player player, List<Enemy> enemies) {
+        for (Enemy enemy: enemies) {
+            if (player.isInCollision(enemy)){
+                enemy.setX(random.nextInt(SCREEN_WIDTH));
+                enemy.setY(random.nextInt(SCREEN_HEIGHT));
+                enemy.loadTextures();
+            }
+        }
     }
 
     private void clearScreen() {

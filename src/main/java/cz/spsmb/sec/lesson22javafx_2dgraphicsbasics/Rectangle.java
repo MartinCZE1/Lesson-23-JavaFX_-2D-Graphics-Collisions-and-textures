@@ -20,6 +20,12 @@ public class Rectangle  {
         this.width = width;
     }
 
+    public boolean isInCollision(Rectangle other){
+        boolean colX = this.getX() < other.getX() + other.width && this.getX() + this.width > other.getX();
+        boolean colY = this.getY() < other.getY() + other.height && this.getY() + this.height > other.getY();;
+        return colX && colY;
+    }
+
     public int getX() {
         return x;
     }
