@@ -4,17 +4,20 @@ public class Rectangle  {
     int x;
     int y;
     int height;
+    int width;
 
     public Rectangle(int x, int y) {
         this.x = x;
         this.y = y;
         this.height = 25;
+        this.width = 25;
     }
 
-    public Rectangle(int x, int y, int height) {
+    public Rectangle(int x, int y, int height, int width) {
         this.x = x;
         this.y = y;
         this.height = height;
+        this.width = width;
     }
 
     public int getX() {
@@ -39,6 +42,14 @@ public class Rectangle  {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 
     public void incrementX(){

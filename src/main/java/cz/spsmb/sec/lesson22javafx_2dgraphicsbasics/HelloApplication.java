@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
@@ -15,12 +16,12 @@ import java.io.IOException;
 import java.util.Random;
 
 public class HelloApplication extends Application {
-    public static final int SCREEN_WIDTH = 600;
-    public static final int SCREEN_HEIGHT = 600;
+    public static final int SCREEN_WIDTH = 1900;
+    public static final int SCREEN_HEIGHT = 920;
     public boolean stop = false;
     public int speed = 10;
 
-    Rectangle rectangle;
+    Player player;
 
 
     Random random = new Random();
@@ -72,7 +73,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        rectangle = new Rectangle(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT));
+        player = new Player(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT));
 
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastTick = 0;
@@ -95,26 +96,30 @@ public class HelloApplication extends Application {
 
         clearScreen();
         // Každé překreslení obrazovky
+        Image currentPlayerTexture = player.getImages()[0];
+
         switch (direction){
             case up:
-                stop = rectangle.getY() < 0;
-                if (!stop) rectangle.decrementY();
+                stop = player.getY() < 0;
+                if (!stop) player.decrementY();
                 break;
             case down:
-                stop = rectangle.getY() > SCREEN_HEIGHT - rectangle.height;
-                if (!stop) rectangle.incrementY();
+                stop = player.getY() > SCREEN_HEIGHT - player.height;
+                if (!stop) player.incrementY();
                 break;
             case left:
-                stop = rectangle.getX() < 0;
-                if (!stop) rectangle.decrementX();
+                stop = player.getX() < 0;
+                if (!stop) player.decrementX();
+                currentPlayerTexture = player.getImages()[0];
                 break;
             case right:
-                stop = rectangle.getX() > SCREEN_HEIGHT - rectangle.height;
-                if (!stop) rectangle.incrementX();
+                stop = player.getX() > SCREEN_HEIGHT - player.height;
+                if (!stop) player.incrementX();
+                currentPlayerTexture = player.getImages()[1];
                 break;
         }
         graphicsContext.setFill(Color.GREENYELLOW);
-        graphicsContext.fillRect(rectangle.x, rectangle.y, rectangle.height, rectangle.height);
+        graphicsContext.drawImage(currentPlayerTexture, player.x, player.y, player.height, player.height);
 
 
     }
