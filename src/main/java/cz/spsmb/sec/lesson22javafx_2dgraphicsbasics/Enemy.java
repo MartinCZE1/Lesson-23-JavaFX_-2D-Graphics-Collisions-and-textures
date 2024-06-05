@@ -17,19 +17,19 @@ public class Enemy extends Rectangle {
     public Enemy(int x, int y) {
         super(x, y);
         loadTextures();
+        score = random.nextInt(10) + 1;
     }
 
     public void loadTextures() {
         URL url = getClass().getResource("/images/" + TEXTURES.get(random.nextInt(TEXTURES.size())));
         if (url != null) {
             image = new Image(url.toString());
-            setWidth((int) image.getWidth()/2);
-            setHeight((int) image.getHeight()/2);
+            setWidth((int) image.getWidth() / 2);
+            setHeight((int) image.getHeight() / 2);
         } else {
             System.out.println("Texture could not be loaded.");
         }
     }
-
 
 
     public int getScore() {

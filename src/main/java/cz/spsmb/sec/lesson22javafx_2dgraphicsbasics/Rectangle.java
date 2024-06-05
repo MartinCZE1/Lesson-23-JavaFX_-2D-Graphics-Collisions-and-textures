@@ -1,10 +1,13 @@
 package cz.spsmb.sec.lesson22javafx_2dgraphicsbasics;
 
-public class Rectangle  {
+public class Rectangle {
     int x;
     int y;
     int height;
     int width;
+
+    double targetX;
+    double targetY;
 
     public Rectangle(int x, int y) {
         this.x = x;
@@ -20,10 +23,25 @@ public class Rectangle  {
         this.width = width;
     }
 
-    public boolean isInCollision(Rectangle other){
+    public boolean isInCollision(Rectangle other) {
         boolean colX = this.getX() < other.getX() + other.width && this.getX() + this.width > other.getX();
         boolean colY = this.getY() < other.getY() + other.height && this.getY() + this.height > other.getY();
         return colX && colY;
+    }
+
+    public void moveToPosition(double targetX, double targetY) {
+        if (targetX >= this.x) {
+            incrementX();
+        }
+        if (targetX <= this.x) {
+            decrementX();
+        }
+        if (targetY >= this.y) {
+            incrementY();
+        }
+        if (targetY <= this.y) {
+            decrementY();
+        }
     }
 
     public int getX() {
@@ -58,18 +76,19 @@ public class Rectangle  {
         this.width = width;
     }
 
-    public void incrementX(){
+    public void incrementX() {
         x++;
     }
-    public void decrementX(){
+
+    public void decrementX() {
         x--;
     }
 
-    public void incrementY(){
+    public void incrementY() {
         y++;
     }
 
-    public void decrementY(){
+    public void decrementY() {
         y--;
     }
 }
